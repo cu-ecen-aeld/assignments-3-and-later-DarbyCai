@@ -122,23 +122,23 @@ bool do_exec_redirect(const char *outputfile, int count, ...)
  *
 */
 		pid_t pid;
-		int fd = open("outputfile", O_WRONLY|O_TRUNC|O_CREAT, 0644); 
-		if (fd == -1) {
-			perror("open()");
-			exit(EXIT_FAILURE);
-		}
-
-		if (dup2(fd, 1) < 0) {
-			perror("dup2");
-			exit(EXIT_FAILURE);					
-		}
-		close(fd);
 
 		pid = fork();
 		if (pid == -1) {
 			perror("fork()");
 			exit(EXIT_FAILURE);
 		} else if (pid == 0) {
+			int fd = open(outputfile, O_WRONLY|O_TRUNC|O_CREAT, 0644); 
+			if (fd == -1) {
+				perror("open()");
+				exit(EXIT_FAILURE);
+			}
+			if (dup2(fd, 1) == -1) {
+			  perror("dup2()");
+				exit(EXIT_FAILURE);	
+			}
+			close(fd);
+
 			if (execv(command[0], command) == -1) {
 				perror("execv");
 				exit(EXIT_FAILURE);
