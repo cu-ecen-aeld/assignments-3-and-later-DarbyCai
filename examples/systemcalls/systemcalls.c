@@ -145,7 +145,6 @@ bool do_exec_redirect(const char *outputfile, int count, ...)
 			}
 		} else {
 			int status;
-			close(fd);
 			wait(&status);
 			return !status ? true : false;
 		}
