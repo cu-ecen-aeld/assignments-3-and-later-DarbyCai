@@ -48,3 +48,11 @@ Call trace:
 Code: d2800001 d2800000 d503233f d50323bf (b900003f)
 ---[ end trace 0000000000000000 ]---
 ```
+
+## Anaysic 
+- This opps message is like a derefencing a NULL pointer in the faulty_write() function, as shown in the error message below.
+
+Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+faulty_write+0x10/0x20 [faulty]
+ ksys_write+0x70/0x110
+
